@@ -61,7 +61,7 @@ const Qdetails = (props) => {
               />
               <lable>{question.optionOne.text}</lable>
               <br />
-              <span>{votesOptionOne} chose this answer</span>
+
               <br />
               <input
                 id="optionTwo"
@@ -72,13 +72,13 @@ const Qdetails = (props) => {
               />
               <lable>{question.optionTwo.text}</lable>
               <br />
-              <span>{votesOptionTwo} chose this answer</span>
+
               <button
                 className="btn btn-primary "
                 type="Submit"
                 onClick={(e) => handleSubmitMinor(e)}
               >
-                Submit answer
+                View Results
               </button>
             </form>
           ) : (
@@ -91,7 +91,7 @@ const Qdetails = (props) => {
               />
               <lable>{question.optionOne.text}</lable>
               <br />
-              <span>{votesOptionOne} chose this answer</span>
+
               <br />
               <input
                 id="optionTwo"
@@ -101,7 +101,7 @@ const Qdetails = (props) => {
               />
               <lable>{question.optionTwo.text}</lable>
               <br />
-              <span>{votesOptionTwo} chose this answer</span>
+
               <button
                 className="btn btn-primary "
                 type="Submit"
