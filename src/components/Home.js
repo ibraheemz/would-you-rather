@@ -3,14 +3,14 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import Question from "./Question";
 
-const Home = ({ questionIds, userAnswers }) => {
+const Home = ({ answered, unanswered, authedUser }) => {
   const [showAnswered, setShowAnswered] = useState(false);
   const [showNotanswered, setShownotanswered] = useState(true);
-  if (questionIds === undefined) {
+  if (authedUser === undefined) {
     return <Redirect to="/Login" />;
   }
-  console.log("question", questionIds);
-  const notAnswered = questionIds.filter((qid) => !userAnswers.includes(qid));
+  console.log(answered, unanswered);
+
   return (
     <div className="row bg-primary">
       <div className="row justify-content-between">
@@ -37,9 +37,9 @@ const Home = ({ questionIds, userAnswers }) => {
       <div className={showAnswered ? "col-4" : "d-none"}>
         <h2 className="ml-5 btn "> Answered </h2>
         <ul>
-          {userAnswers.map((qId) => (
-            <li key={qId}>
-              <Question id={qId} />
+          {answered.map((q) => (
+            <li key={q.id}>
+              <Question id={q.id} />
             </li>
           ))}
         </ul>
@@ -47,9 +47,9 @@ const Home = ({ questionIds, userAnswers }) => {
       <div className={showNotanswered ? "col-4" : "d-none"}>
         <h2 className="btn">Not answered</h2>
         <ul>
-          {notAnswered.map((qId) => (
-            <li key={qId}>
-              <Question id={qId} />
+          {unanswered.map((q) => (
+            <li key={q.id}>
+              <Question id={q.id} />
             </li>
           ))}
         </ul>
@@ -59,17 +59,18 @@ const Home = ({ questionIds, userAnswers }) => {
 };
 
 const mapStateToProps = ({ questions, authedUser, users }) => {
-  let user = "";
-  if (authedUser) {
-    user = users[authedUser];
-    return {
-      questionIds: Object.keys(questions).sort(
-        (a, b) => questions[b].timestamp - questions[a].timestamb
-      ),
-      userAnswers: Object.keys(user.answers).sort(
-        (a, b) => questions[b].timestamp - questions[a].timestamb
-      ),
-    };
-  }
+  const answeredIds = Object.keys(users[authedUser].answers);
+  const answered = Object.values(questions)
+    .filter((question) => answeredIds.includes(question.id))
+    .sort((a, b) => b.timestamp - a.timestamp);
+  const unanswered = Object.values(questions)
+    .filter((question) => !answeredIds.includes(question.id))
+    .sort((a, b) => b.timestamp - a.timestamp);
+
+  return {
+    answered,
+    unanswered,
+    authedUser,
+  };
 };
 export default connect(mapStateToProps)(Home);
