@@ -14,12 +14,6 @@ const Qresults = () => {
   const [user, setUser] = useState(null);
   const [numOfAnswers, setNumOfAnswers] = useState(null);
 
-  //   const question = questions[id];
-  //   const author = question.author;
-  //   const user = users[author];
-  //   const numOfAnswers =
-  //     question.optionOne.votes.length + question.optionTwo.votes.length;
-
   useEffect(() => {
     authedUser === null && history.push("/Login");
     setQuestion(questions[id]);
@@ -44,8 +38,10 @@ const Qresults = () => {
               <p1>{question.optionOne.text}</p1>
               <br />
               <span>
-                {question.optionOne.votes.length} out of {numOfAnswers} chose
-                this answer
+                {Math.round(
+                  (question.optionOne.votes.length / numOfAnswers) * 100
+                )}
+                % chose this answer
               </span>
             </div>
             <br />
@@ -53,8 +49,10 @@ const Qresults = () => {
               <p1>{question.optionTwo.text}</p1>
               <br />
               <span>
-                {question.optionTwo.votes.length} out of {numOfAnswers} chose
-                this answer
+                {Math.round(
+                  (question.optionTwo.votes.length / numOfAnswers) * 100
+                )}
+                % chose this answer
               </span>
             </div>
           </div>
