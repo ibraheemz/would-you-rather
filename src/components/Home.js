@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 import Question from "./Question";
 
 const Home = ({ questionIds, userAnswers }) => {
+  const [showAnswered, setShowAnswered] = useState(false);
+  const [showNotanswered, setShownotanswered] = useState(true);
   if (questionIds === undefined) {
     return <Redirect to="/Login" />;
   }
@@ -11,8 +13,29 @@ const Home = ({ questionIds, userAnswers }) => {
   const notAnswered = questionIds.filter((qid) => !userAnswers.includes(qid));
   return (
     <div className="row bg-primary">
-      <div className="answered col-4">
-        <h2 className="ml-5"> Answered </h2>
+      <div className="row justify-content-between">
+        <button
+          className="btn btn-secondary border border-light col-6"
+          onClick={() => {
+            setShowAnswered(true);
+            setShownotanswered(false);
+          }}
+        >
+          Show answered questions
+        </button>
+        <button
+          className="btn btn-secondary border border-light col-6"
+          onClick={() => {
+            setShowAnswered(false);
+            setShownotanswered(true);
+          }}
+        >
+          Show not answered questions
+        </button>
+      </div>
+
+      <div className={showAnswered ? "col-4" : "d-none"}>
+        <h2 className="ml-5 btn "> Answered </h2>
         <ul>
           {userAnswers.map((qId) => (
             <li key={qId}>
@@ -21,8 +44,8 @@ const Home = ({ questionIds, userAnswers }) => {
           ))}
         </ul>
       </div>
-      <div className="notAnswered col-4">
-        <h2>Not answered</h2>
+      <div className={showNotanswered ? "col-4" : "d-none"}>
+        <h2 className="btn">Not answered</h2>
         <ul>
           {notAnswered.map((qId) => (
             <li key={qId}>
