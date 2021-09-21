@@ -27,7 +27,7 @@ function App({ dispatch, notAuthed }) {
             <Route path="/question/:id" component={Qdetails} />
             <Route path="/Login" component={Login} />
             <Route path="/LeaderBoard" component={LeaderBoard} />
-            <Route path="/CreateQuestion" component={NewQuestion} />
+            <Route path="/add" component={NewQuestion} />
             <Route path="/Qresults/:id" component={Qresults} />
             <Route path="/404" component={Notfound} />
           </div>

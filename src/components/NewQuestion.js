@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router";
 import { handleCreateQuestion } from "../actions/questions";
 
 const NewQuestion = ({ authedUser, createNewQuestion }) => {
   const [optionOne, setOptionOne] = useState("");
   const [optionTwo, setOptionTwo] = useState("");
+  const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
     createNewQuestion(optionOne, optionTwo, authedUser);
     setOptionOne("");
     setOptionTwo("");
     alert("Question Submitted !");
+    history.push("/Home");
   };
   return (
     <div>

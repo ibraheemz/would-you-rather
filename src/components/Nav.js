@@ -17,7 +17,7 @@ function Nav({ authedUser, handleLogOut }) {
           </NavLink>
         </li>
         <li className="col-6">
-          <NavLink to="/CreateQuestion" exact activeClassName="active">
+          <NavLink to="/add" exact activeClassName="active">
             Create Question
           </NavLink>
         </li>
