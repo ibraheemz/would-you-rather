@@ -21,7 +21,7 @@ const Qdetails = (props) => {
 
   useEffect(() => {
     authedUser === null && history.push("/Login");
-    setQuestion(questions[id]);
+    questions[id] ? setQuestion(questions[id]) : history.push("/404");
     setUser(question && question.author && users[question.author]);
     setLoggedInUser(users[authedUser]);
     setUserVote(loggedInUser && loggedInUser.answers[question.id]);

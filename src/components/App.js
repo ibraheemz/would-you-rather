@@ -11,6 +11,7 @@ import Qresults from "./Qresults";
 import { Redirect } from "react-router";
 import LeaderBoard from "./LeaderBoard";
 import NewQuestion from "./NewQuestion";
+import Notfound from "./Notfound";
 function App({ dispatch, notAuthed }) {
   useEffect(() => {
     dispatch(handelInitalData());
@@ -28,6 +29,7 @@ function App({ dispatch, notAuthed }) {
             <Route path="/LeaderBoard" component={LeaderBoard} />
             <Route path="/CreateQuestion" component={NewQuestion} />
             <Route path="/Qresults/:id" component={Qresults} />
+            <Route path="/404" component={Notfound} />
           </div>
           {notAuthed && <Redirect to="/Login" />}
         </div>
