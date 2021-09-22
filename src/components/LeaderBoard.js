@@ -9,7 +9,7 @@ const LeaderBoard = () => {
 
   const history = useHistory();
   useEffect(() => {
-    authedUser === null && history.pushState("/Login");
+    authedUser === null && history.push("/Login");
     const leaderboardData = Object.values(users)
       .map((user) => ({
         id: user.id,
