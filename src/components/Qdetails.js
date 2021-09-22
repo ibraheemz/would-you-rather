@@ -23,28 +23,30 @@ const Qdetails = (props) => {
   const { id } = props.match.params;
 
   useEffect(() => {
-    authedUser === null &&
+    if (authedUser) {
+      questions[id]
+        ? setQuestion(questions[id])
+        : questions
+        ? history.push("/404")
+        : authedUser === null &&
+          history.push({
+            pathname: "/Login",
+            state: { lastURL: `/question/${id}` },
+          });
+    } else {
       history.push({
         pathname: "/Login",
         state: { lastURL: `/question/${id}` },
       });
+    }
 
-    questions[id]
-      ? setQuestion(questions[id])
-      : questions.length
-      ? history.push("/404")
-      : authedUser === null &&
-        history.push({
-          pathname: "/Login",
-          state: { lastURL: `/question/${id}` },
-        });
     setUser(question && question.author && users[question.author]);
     setLoggedInUser(users[authedUser]);
-    setUserVote(loggedInUser && loggedInUser.answers[question.id]);
+    question && setUserVote(loggedInUser && loggedInUser.answers[question.id]);
     setVotesOptionOne(question && question.optionOne.votes.length);
     setVotesOptionTwo(question && question.optionTwo.votes.length);
     console.log("questions: ", questions);
-  }, [question, user, loggedInUser, userVote]);
+  }, [question, user, loggedInUser, userVote, authedUser]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
