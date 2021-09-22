@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router";
-const LeaderBoard = () => {
+const LeaderBoard = (props) => {
   const users = useSelector((state) => state.users);
   const authedUser = useSelector((state) => state.authedUser);
 
@@ -9,7 +9,12 @@ const LeaderBoard = () => {
 
   const history = useHistory();
   useEffect(() => {
-    authedUser === null && history.push("/Login");
+    // authedUser === null && history.push("/Login");
+    authedUser === null &&
+      history.push({
+        pathname: "/Login",
+        state: { lastURL: "/LeaderBoard" },
+      });
     const leaderboardData = Object.values(users)
       .map((user) => ({
         id: user.id,

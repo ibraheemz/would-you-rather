@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useState } from "react";
 import setAuthedUser from "../actions/setAuthedUser";
-import { Redirect } from "react-router";
-const Login = ({ users, dispatch, authedUser }) => {
+import { Redirect, useHistory, useLocation } from "react-router";
+const Login = ({ users, dispatch, authedUser, props }) => {
   const [currentUser, setCurrentUser] = useState("");
   const [toHome, setToHome] = useState(false);
+
+  const history = useHistory();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setAuthedUser(currentUser));
     setToHome(true);
   };
-  if (toHome) return <Redirect to="/Home" />;
+
+  if (toHome) {
+    location.state === undefined && history.push("/Home");
+    location.state && history.push(location.state.lastURL);
+  }
+
   return (
     <div>
       <h1>Login to continue</h1>
@@ -38,10 +46,11 @@ const Login = ({ users, dispatch, authedUser }) => {
   );
 };
 
-function mapStateToProps({ users, authedUser }) {
+function mapStateToProps({ users, authedUser }, props) {
   return {
     users: Object.values(users),
     authedUser,
+    props,
   };
 }
 
