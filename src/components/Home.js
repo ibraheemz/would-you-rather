@@ -17,14 +17,18 @@ const Home = () => {
     authedUser === null && history.push("/Login");
     const answeredIds =
       users[authedUser] && Object.keys(users[authedUser].answers);
-    const answered = Object.values(questions)
-      .filter((question) => answeredIds.includes(question.id))
-      .sort((a, b) => b.timestamp - a.timestamp);
+    const answered =
+      answeredIds &&
+      Object.values(questions)
+        .filter((question) => answeredIds.includes(question.id))
+        .sort((a, b) => b.timestamp - a.timestamp);
     setAnswered(answered);
 
-    const unanswered = Object.values(questions)
-      .filter((question) => !answeredIds.includes(question.id))
-      .sort((a, b) => b.timestamp - a.timestamp);
+    const unanswered =
+      answeredIds &&
+      Object.values(questions)
+        .filter((question) => !answeredIds.includes(question.id))
+        .sort((a, b) => b.timestamp - a.timestamp);
     setUnanswered(unanswered);
   }, [questions, authedUser, users]);
 

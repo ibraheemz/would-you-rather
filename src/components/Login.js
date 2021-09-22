@@ -18,6 +18,9 @@ const Login = ({ users, dispatch, authedUser, props }) => {
 
   if (toHome) {
     location.state === undefined && history.push("/Home");
+    location.state &&
+      location.state.lastURL === "/Login" &&
+      history.push("/Home");
     location.state && history.push(location.state.lastURL);
   }
 

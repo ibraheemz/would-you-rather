@@ -16,7 +16,12 @@ const Qresults = () => {
   const [userAnswer, setUserAnswer] = useState(null);
 
   useEffect(() => {
-    authedUser === null && history.push("/Login");
+    authedUser === null &&
+      history.push({
+        pathname: "/Login",
+        state: { lastURL: `/Qresults/${id}` },
+      });
+
     setQuestion(questions[id]);
     setAuthor(question && question.author);
     setUser(users[author]);

@@ -7,6 +7,13 @@ const NewQuestion = ({ authedUser, createNewQuestion }) => {
   const [optionOne, setOptionOne] = useState("");
   const [optionTwo, setOptionTwo] = useState("");
   const history = useHistory();
+
+  authedUser === null &&
+    history.push({
+      pathname: "/Login",
+      state: { lastURL: "/add" },
+    });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     createNewQuestion(optionOne, optionTwo, authedUser);

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSaveQuestionAnswer } from "../actions/users";
 
 const Qdetails = (props) => {
   const [answer, setAnswer] = useState("");
+
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
+
   const authedUser = useSelector((state) => state.authedUser);
   const questions = useSelector((state) => state.questions);
   const users = useSelector((state) => state.users);
@@ -20,8 +23,21 @@ const Qdetails = (props) => {
   const { id } = props.match.params;
 
   useEffect(() => {
-    authedUser === null && history.push("/Login");
-    questions[id] ? setQuestion(questions[id]) : history.push("/404");
+    authedUser === null &&
+      history.push({
+        pathname: "/Login",
+        state: { lastURL: `/question/${id}` },
+      });
+
+    questions[id]
+      ? setQuestion(questions[id])
+      : questions.length
+      ? history.push("/404")
+      : authedUser === null &&
+        history.push({
+          pathname: "/Login",
+          state: { lastURL: `/question/${id}` },
+        });
     setUser(question && question.author && users[question.author]);
     setLoggedInUser(users[authedUser]);
     setUserVote(loggedInUser && loggedInUser.answers[question.id]);
