@@ -28,13 +28,14 @@ const Qdetails = (props) => {
     setVotesOptionOne(question && question.optionOne.votes.length);
     setVotesOptionTwo(question && question.optionTwo.votes.length);
     console.log("questions: ", questions);
-  }, [question, user, loggedInUser]);
+  }, [question, user, loggedInUser, userVote]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (answer) {
-      dispatch(handleSaveQuestionAnswer(authedUser, id, answer));
-      history.push(`/Qresults/${id}`);
+      dispatch(handleSaveQuestionAnswer(authedUser, id, answer)).then(() =>
+        history.push(`/Qresults/${id}`)
+      );
     } else {
       alert("you can't submit without choosing an answer");
     }

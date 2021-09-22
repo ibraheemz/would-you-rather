@@ -1,37 +1,49 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Redirect } from "react-router";
-const LeaderBoard = ({ users, authedUser }) => {
-  if (authedUser === null) {
-    return <Redirect to="/Login" />;
-  }
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Redirect, useHistory } from "react-router";
+const LeaderBoard = () => {
+  const users = useSelector((state) => state.users);
+  const authedUser = useSelector((state) => state.authedUser);
+
+  const [BoardData, setBoardData] = useState(null);
+
+  const history = useHistory();
+  useEffect(() => {
+    authedUser === null && history.pushState("/Login");
+    const leaderboardData = Object.values(users)
+      .map((user) => ({
+        id: user.id,
+        name: user.name,
+        avatarURL: user.avatarURL,
+        answerCount: Object.values(user.answers).length,
+        questionCount: user.questions.length,
+        total: Object.values(user.answers).length + user.questions.length,
+      }))
+      .sort((a, b) => a.total - b.total)
+      .reverse()
+      .slice(0, 3);
+    setBoardData(leaderboardData);
+  }, [users, authedUser]);
+
   console.log(users);
   return (
     <div>
-      {users &&
-        Object.keys(users).map((user) => (
-          <div className="mb-4">
-            <h3>{users[user].name}</h3>
-            <span>
-              Answered questions: {Object.keys(users[user].answers).length}
-            </span>
+      {BoardData ? (
+        BoardData.map((user) => (
+          <div className="mb-4" key={user.id}>
+            <h3>{user.name}</h3>
+            <span>Answered questions: {user.answerCount}</span>
             <br />
-            <span>Created questions: {users[user].questions.length}</span>
+            <span>Created questions: {user.questionCount}</span>
             <br />
-            <span>
-              Total Score:{" "}
-              {Object.keys(users[user].answers).length +
-                users[user].questions.length}
-            </span>
+            <span>Total Score: {user.total}</span>
           </div>
-        ))}
+        ))
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 };
-const mapStateToProps = ({ users, authedUser }) => {
-  return {
-    users,
-    authedUser,
-  };
-};
-export default connect(mapStateToProps)(LeaderBoard);
+
+export default LeaderBoard;

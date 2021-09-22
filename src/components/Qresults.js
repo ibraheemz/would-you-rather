@@ -13,6 +13,7 @@ const Qresults = () => {
   const [author, setAuthor] = useState(null);
   const [user, setUser] = useState(null);
   const [numOfAnswers, setNumOfAnswers] = useState(null);
+  const [userAnswer, setUserAnswer] = useState(null);
 
   useEffect(() => {
     authedUser === null && history.push("/Login");
@@ -23,7 +24,18 @@ const Qresults = () => {
       question &&
         question.optionOne.votes.length + question.optionTwo.votes.length
     );
+    if (question) {
+      for (let i = 0; i <= question.optionOne.votes.length; i++) {
+        question.optionOne.votes[i] === authedUser &&
+          setUserAnswer("optionOne");
+      }
+      for (let i = 0; i <= question.optionTwo.votes.length; i++) {
+        question.optionTwo.votes[i] === authedUser &&
+          setUserAnswer("optionTwo");
+      }
+    }
   }, [question, author, user]);
+
   return (
     <div>
       {question && author && user ? (
@@ -34,10 +46,16 @@ const Qresults = () => {
           </div>
           <div>
             <h4>Results:</h4>
-            <div>
+            <div
+              className={
+                userAnswer === "optionOne" ? "border border-primary" : ""
+              }
+            >
               <p1>{question.optionOne.text}</p1>
               <br />
               <span>
+                {question.optionOne.votes.length} voted for this
+                <br />
                 {Math.round(
                   (question.optionOne.votes.length / numOfAnswers) * 100
                 )}
@@ -45,10 +63,18 @@ const Qresults = () => {
               </span>
             </div>
             <br />
-            <div>
+            <div
+              className={
+                userAnswer === "optionTwo"
+                  ? "border rounded border-primary"
+                  : ""
+              }
+            >
               <p1>{question.optionTwo.text}</p1>
               <br />
               <span>
+                {question.optionTwo.votes.length} voted for this
+                <br />
                 {Math.round(
                   (question.optionTwo.votes.length / numOfAnswers) * 100
                 )}
