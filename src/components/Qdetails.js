@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { handleSaveQuestionAnswer } from "../actions/users";
 
@@ -8,7 +9,6 @@ const Qdetails = (props) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const location = useLocation();
 
   const authedUser = useSelector((state) => state.authedUser);
   const questions = useSelector((state) => state.questions);
@@ -18,8 +18,6 @@ const Qdetails = (props) => {
   const [user, setUser] = useState(null);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [userVote, setUserVote] = useState(null);
-  const [votesOptionOne, setVotesOptionOne] = useState(null);
-  const [votesOptionTwo, setVotesOptionTwo] = useState(null);
   const { id } = props.match.params;
 
   useEffect(() => {
@@ -43,8 +41,6 @@ const Qdetails = (props) => {
     setUser(question && question.author && users[question.author]);
     setLoggedInUser(users[authedUser]);
     question && setUserVote(loggedInUser && loggedInUser.answers[question.id]);
-    setVotesOptionOne(question && question.optionOne.votes.length);
-    setVotesOptionTwo(question && question.optionTwo.votes.length);
     console.log("questions: ", questions);
   }, [question, user, loggedInUser, userVote, authedUser]);
 

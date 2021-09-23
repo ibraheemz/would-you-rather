@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { useState } from "react";
 import setAuthedUser from "../actions/setAuthedUser";
-import { Redirect, useHistory, useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 const Login = ({ users, dispatch, authedUser, props }) => {
   const [currentUser, setCurrentUser] = useState("");
   const [toHome, setToHome] = useState(false);

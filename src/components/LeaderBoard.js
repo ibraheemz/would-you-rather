@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 const LeaderBoard = (props) => {
   const users = useSelector((state) => state.users);
   const authedUser = useSelector((state) => state.authedUser);
@@ -9,7 +10,6 @@ const LeaderBoard = (props) => {
 
   const history = useHistory();
   useEffect(() => {
-    // authedUser === null && history.push("/Login");
     authedUser === null &&
       history.push({
         pathname: "/Login",
@@ -37,11 +37,20 @@ const LeaderBoard = (props) => {
         BoardData.map((user) => (
           <div className="mb-4" key={user.id}>
             <h3>{user.name}</h3>
-            <span>Answered questions: {user.answerCount}</span>
-            <br />
-            <span>Created questions: {user.questionCount}</span>
-            <br />
-            <span>Total Score: {user.total}</span>
+            <img
+              src={user.avatarURL}
+              alt={`a piture of ${user.name}`}
+              className="img-thumbnail"
+              width="300"
+              height="200"
+            />
+            <div>
+              <span>Answered questions: {user.answerCount}</span>
+              <br />
+              <span>Created questions: {user.questionCount}</span>
+              <br />
+              <span>Total Score: {user.total}</span>
+            </div>
           </div>
         ))
       ) : (

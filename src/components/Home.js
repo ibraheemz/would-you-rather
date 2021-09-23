@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { connect, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import Question from "./Question";
 
 const Home = () => {

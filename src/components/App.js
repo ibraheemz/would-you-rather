@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Login from "./Login";
 import { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
