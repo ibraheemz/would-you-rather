@@ -32,7 +32,7 @@ To improve the predictability of the app's state, strict rules have been establi
 To get started, clone the repository to your local machine:
 
 ```
-git clone https://github.com/your-username/would-you-rather.git
+git clone https://github.com/ibraheemz/would-you-rather.git
 ```
 
 Then, navigate to the project directory and install the necessary dependencies:
@@ -52,7 +52,7 @@ This will start the app and open it in your default browser at `http://localhost
 
 ## Contributing
 
-Contributions are welcome! If you find a bug or have a feature request, please file an issue on the [GitHub repository ↗](https://github.com/your-username/would-you-rather/issues).
+Contributions are welcome! If you find a bug or have a feature request, please file an issue on the [GitHub repository ↗](https://github.com/ibraheemz/would-you-rather/issues).
 
 If you would like to contribute code, please fork the repository and submit a pull request. Make sure to run the tests before submitting your changes:
 
